@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:flutter_svg/flutter_svg.dart'; // больше не нужен
 import 'dart:math' as math;
 
 class HomeScreen extends StatelessWidget {
@@ -18,51 +18,53 @@ class HomeScreen extends StatelessWidget {
         children: [
           // Фон #0A1DBA
           Container(color: const Color(0xFF0A1DBA)),
+
           // Ray burst
           Positioned.fill(
             child: CustomPaint(
               painter: _RayBurstPainter(
                 center: rayCenter,
-                rays: 32,
+                rays: 70,
                 color: const Color(0x9906AEE6),
                 thickness: width * 0.012,
                 length: width * 0.95,
               ),
             ),
           ),
-          // Облака (sky.svg) только снизу
+          // Логотип (flight_math.png) сверху, крупно
+          Positioned(
+            top: height * 0.06,
+            left: 0,
+            right: 0,
+            child: Image.asset(
+              'assets/flight_math.png',
+              width: width * 0.92,
+              height: height * 0.17,
+              fit: BoxFit.contain,
+            ),
+          ),
+          // Облака (sky.png) только снизу
           Positioned(
             left: 0,
             right: 0,
             bottom: 0,
-            child: SvgPicture.asset(
-              'assets/sky.svg',
+            child: Image.asset(
+              'assets/sky.png',
               width: width,
-              height: height * 0.19,
-              fit: BoxFit.fill,
+              height: height * 0.23,
+              fit: BoxFit.cover,
             ),
           ),
-          // Самолёт (plane.svg) поверх облаков
+          // Самолёт (plane.png) по центру внизу, крупно
           Positioned(
-            left: 0,
-            right: 0,
-            bottom: height * 0.07,
-            child: SvgPicture.asset(
-              'assets/plane.svg',
-              height: height * 0.22,
-            ),
-          ),
-          // Заголовок (flight_math.svg)
-          Positioned(
-            left: 0,
-            right: 0,
-            top: height * 0.06,
-            child: Center(
-              child: SvgPicture.asset(
-                'assets/flight_math.svg',
-                width: width * 0.85,
-                fit: BoxFit.contain,
-              ),
+            left: width * 0.08,
+            right: width * 0.08,
+            bottom: height * 0.06,
+            child: Image.asset(
+              'assets/plane.png',
+              width: width * 0.84,
+              height: height * 0.26,
+              fit: BoxFit.contain,
             ),
           ),
           // Контент (кнопки)
