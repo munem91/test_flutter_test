@@ -1,0 +1,9 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+- always follow the project layout (design/ features/clean arch).
+
+
+- never mix logic with ui . never put more than 1 class in 1 file.

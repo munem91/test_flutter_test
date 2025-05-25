@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
           // Фон #0A1DBA
           Container(color: const Color(0xFF0A1DBA)),
 
-          // Ray burst
+          // Ray burst (фон)
           Positioned.fill(
             child: CustomPaint(
               painter: _RayBurstPainter(
@@ -31,19 +31,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          // Логотип (flight_math.png) сверху, крупно
-          Positioned(
-            top: height * 0.06,
-            left: 0,
-            right: 0,
-            child: Image.asset(
-              'assets/flight_math.png',
-              width: width * 0.92,
-              height: height * 0.17,
-              fit: BoxFit.contain,
-            ),
-          ),
-          // Облака (sky.png) только снизу
+          // Облака (sky.png) только снизу (фон)
           Positioned(
             left: 0,
             right: 0,
@@ -55,80 +43,93 @@ class HomeScreen extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          // Самолёт (plane.png) по центру внизу, крупно
-          Positioned(
-            left: width * 0.08,
-            right: width * 0.08,
-            bottom: height * 0.06,
-            child: Image.asset(
-              'assets/plane.png',
-              width: width * 0.84,
-              height: height * 0.26,
-              fit: BoxFit.contain,
-            ),
-          ),
-          // Контент (кнопки)
+          // Контент (логотип, кнопки, самолёт) — только через Column
           SafeArea(
             child: Column(
               children: [
-                SizedBox(height: height * 0.29),
-                _MenuButton(
-                  text: 'Start Mission',
-                  width: width * 0.87,
-                  fontSize: width * 0.07,
-                  onPressed: () => context.go('/levels'),
-                ),
-                SizedBox(height: height * 0.032),
-                _MenuButton(
-                  text: 'How to Play',
-                  width: width * 0.87,
-                  fontSize: width * 0.07,
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: const Text('How to Play'),
-                        content: const SingleChildScrollView(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('🎯 Mission Types:'),
-                              SizedBox(height: 8),
-                              Text('• Time Calculations'),
-                              Text('• Direction and Angles'),
-                              Text('• Fuel Consumption'),
-                              Text('• Cargo Balance'),
-                              SizedBox(height: 16),
-                              Text('📝 How to Play:'),
-                              SizedBox(height: 8),
-                              Text('1. Select a mission level'),
-                              Text('2. Read the task carefully'),
-                              Text('3. Choose the correct answer'),
-                              Text('4. Get explanations if needed'),
-                              Text('5. Track your progress'),
-                            ],
-                          ),
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: const Text('Got it!'),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-                SizedBox(height: height * 0.032),
-                _MenuButton(
-                  text: 'My Progress',
-                  width: width * 0.87,
-                  fontSize: width * 0.07,
-                  onPressed: () => context.go('/progress'),
+                SizedBox(height: height * 0.08), // паддинг сверху
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width * 0.04),
+                  child: Image.asset(
+                    'assets/flight_math.png',
+                    width: width * 0.92,
+                    height: height * 0.17,
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 const Spacer(),
-                SizedBox(height: height * 0.01),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width * 0.08),
+                  child: _MenuButton(
+                    text: 'Start Mission',
+                    width: width * 0.8,
+                    fontSize: width * 0.07,
+                    onPressed: () => context.go('/levels'),
+                  ),
+                ),
+                SizedBox(height: height * 0.025),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width * 0.08),
+                  child: _MenuButton(
+                    text: 'How to Play',
+                    width: width * 0.8,
+                    fontSize: width * 0.07,
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('How to Play'),
+                          content: const SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('🎯 Mission Types:'),
+                                SizedBox(height: 8),
+                                Text('• Time Calculations'),
+                                Text('• Direction and Angles'),
+                                Text('• Fuel Consumption'),
+                                Text('• Cargo Balance'),
+                                SizedBox(height: 16),
+                                Text('📝 How to Play:'),
+                                SizedBox(height: 8),
+                                Text('1. Select a mission level'),
+                                Text('2. Read the task carefully'),
+                                Text('3. Choose the correct answer'),
+                                Text('4. Get explanations if needed'),
+                                Text('5. Track your progress'),
+                              ],
+                            ),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text('Got it!'),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                SizedBox(height: height * 0.025),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width * 0.08),
+                  child: _MenuButton(
+                    text: 'My Progress',
+                    width: width * 0.8,
+                    fontSize: width * 0.07,
+                    onPressed: () => context.go('/progress'),
+                  ),
+                ),
+                const Spacer(),
+                // Самолёт (plane.png) теперь часть контента, не перекрывает кнопки
+                Image.asset(
+                  'assets/plane.png',
+                  width: width * 0.84,
+                  height: height * 0.26,
+                  fit: BoxFit.contain,
+                ),
               ],
             ),
           ),
@@ -231,3 +232,5 @@ class _RayBurstPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
+
+int selectedLevel = 0;
